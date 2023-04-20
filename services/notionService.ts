@@ -18,7 +18,7 @@ export async function getPublishedProjectPost(): Promise<ProjectPost[]> {
     },
     sorts: [
       {
-        property: 'Name',
+        property: 'Entries',
         direction: 'descending',
       },
     ],
