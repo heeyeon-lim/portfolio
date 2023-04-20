@@ -11,7 +11,7 @@ export default function Header() {
           <Link href="/">
             <span>Home</span>
           </Link>
-          <Link href="/about-me">
+          <Link href="/aboutMe">
             <span>About me</span>
           </Link>
           <Link href="/projects">
@@ -30,6 +30,7 @@ const Container = styled.div`
   padding: 1.25rem;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 30px;
 
   @media (min-width: 768px) {
     flex-direction: row;

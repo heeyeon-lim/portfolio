@@ -22,6 +22,7 @@ const StyledFooter = styled.footer`
   justify-content: center;
   align-items: center;
   background-color: #f7fafc;
+  margin-top: 30px;
   > a {
     color: #718096;
     margin-right: 1rem;
