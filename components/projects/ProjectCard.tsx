@@ -12,7 +12,7 @@ type ProjectCardProps = {
 
 const ProjectCard: FC<ProjectCardProps> = ({ project }) => (
   <Link href={`/project/${project.slug}`}>
-    <Container>
+    <Container onClick={(e) => e.stopPropagation()}>
       <Image src={project.cover} alt="cover-image" width={340} height={190} />
       <Content>
         <p className="project title">{project.title}</p>
@@ -26,24 +26,12 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => (
         </TagContainer>
       </Content>
       <LinkContainer>
-        <span
-          className="project url"
-          onClick={(e) => {
-            e.stopPropagation();
-            window.open(project.url, '_blank');
-          }}
-        >
+        <a href={project.url} target="_blank" className="project url" rel="noreferrer">
           URL 바로가기
-        </span>
-        <span
-          className="project github"
-          onClick={(e) => {
-            e.stopPropagation();
-            window.open(project.github, '_blank');
-          }}
-        >
-          GitHub 바로가기
-        </span>
+        </a>
+        <a href={project.github} target="_blank" className="project github" rel="noreferrer">
+          Github 바로가기
+        </a>
       </LinkContainer>
     </Container>
   </Link>
