@@ -30,7 +30,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => (
           URL 바로가기
         </a>
         <a href={project.github} target="_blank" className="project github" rel="noreferrer">
-          URL 바로가기
+          GitHub 바로가기
         </a>
       </LinkContainer>
     </Container>
