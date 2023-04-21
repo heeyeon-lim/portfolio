@@ -15,6 +15,7 @@ export type ProjectPost = {
   skills: Tag[];
   url: string;
   github: string;
+  figma: string;
   cover: string;
   slug: string;
 };

@@ -26,12 +26,21 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => (
         </TagContainer>
       </Content>
       <LinkContainer>
-        <a href={project.url} target="_blank" className="project url" rel="noreferrer">
-          URL 바로가기
-        </a>
-        <a href={project.github} target="_blank" className="project github" rel="noreferrer">
-          GitHub 바로가기
-        </a>
+        {project.url && (
+          <a href={project.url} target="_blank" className="project url" rel="noreferrer">
+            URL 바로가기
+          </a>
+        )}
+        {project.github && (
+          <a href={project.github} target="_blank" className="project github" rel="noreferrer">
+            GitHub 바로가기
+          </a>
+        )}
+        {project.figma && (
+          <a href={project.figma} target="_blank" className="project figma" rel="noreferrer">
+            Figma 바로가기
+          </a>
+        )}
       </LinkContainer>
     </Container>
   </Link>
@@ -79,7 +88,8 @@ const LinkContainer = styled.div`
   padding-left: 10px;
 
   > .url,
-  .github {
+  .github,
+  .figma {
     font-size: 13px;
     width: fit-content;
     padding: 3px;

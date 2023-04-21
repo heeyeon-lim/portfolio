@@ -24,15 +24,11 @@ export async function getPublishedProjectPost(): Promise<ProjectPost[]> {
     ],
   });
 
-  return response.results.map((res) => {
-    return pageToPostTransformer(res);
-  });
+  return response.results.map((res) => pageToPostTransformer(res));
 }
 
 // Get single post
 export async function getSingleProjectPost(slug: string): Promise<Page> {
-  let post, markdown;
-
   const response = await notion.databases.query({
     database_id: database,
     filter: {
@@ -54,8 +50,8 @@ export async function getSingleProjectPost(slug: string): Promise<Page> {
   const page = response.results[0];
 
   const mdBlocks = await n2m.pageToMarkdown(page.id);
-  markdown = n2m.toMarkdownString(mdBlocks);
-  post = pageToPostTransformer(page);
+  const markdown = n2m.toMarkdownString(mdBlocks);
+  const post = pageToPostTransformer(page);
 
   return {
     post,
@@ -76,6 +72,7 @@ function pageToPostTransformer(page: any): ProjectPost {
     skills: page.properties.Skills.multi_select,
     url: page.properties.URL.url,
     github: page.properties.Github.url,
+    figma: page.properties.Figma.url,
     cover: page.properties.Cover.files[0].file.url,
     slug: page.properties.Slug.formula.string,
   };
