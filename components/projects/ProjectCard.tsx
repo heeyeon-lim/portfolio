@@ -26,12 +26,24 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => (
         </TagContainer>
       </Content>
       <LinkContainer>
-        <a className="project url" href={project.url}>
+        <span
+          className="project url"
+          onClick={(e) => {
+            e.stopPropagation();
+            window.open(project.url, '_blank');
+          }}
+        >
           URL 바로가기
-        </a>
-        <a className="project github" href={project.github}>
+        </span>
+        <span
+          className="project github"
+          onClick={(e) => {
+            e.stopPropagation();
+            window.open(project.github, '_blank');
+          }}
+        >
           GitHub 바로가기
-        </a>
+        </span>
       </LinkContainer>
     </Container>
   </Link>
