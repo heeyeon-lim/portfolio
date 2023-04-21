@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from '@emotion/styled';
 import { SiLinkedin } from 'react-icons/si';
 import { AiFillGithub } from 'react-icons/ai';
@@ -5,10 +6,10 @@ import { AiFillGithub } from 'react-icons/ai';
 export default function Footer() {
   return (
     <StyledFooter>
-      <a href="#">
+      <a href="https://www.linkedin.com/in/annehlim/">
         <SiLinkedin size="17" />
       </a>
-      <a href="#">
+      <a href="https://github.com/heeyeon-lim">
         <AiFillGithub size="19" />
       </a>
     </StyledFooter>

@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 export default function Header() {
@@ -11,14 +12,14 @@ export default function Header() {
           <Link href="/">
             <span>Home</span>
           </Link>
-          <Link href="/aboutMe">
+          {/* <Link href="/aboutMe">
             <span>About me</span>
-          </Link>
+          </Link> */}
           <Link href="/projects">
             <span>Projects</span>
           </Link>
         </Nav>
-        <Button>Button</Button>
+        {/* <Button>다크모드</Button> */}
       </Container>
     </header>
   );

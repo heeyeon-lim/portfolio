@@ -1,43 +1,40 @@
+import React from 'react';
 import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import styled from '@emotion/styled';
-import Animation from '../components/home/animation';
+import Animation from '../components/home/Animation';
 import Link from 'next/link';
 import type { NextPage } from 'next';
 
-const Home: NextPage = () => {
-  return (
-    <>
-      <Head>
-        <title>나의 포트폴리오</title>
-        <meta name="description" content="임희연의 포트폴리오" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <section>
-        <Container>
-          <Content>
-            <Title>
-              Before they sold out
-              <br />
-              readymade gluten
-            </Title>
-            <Paragraph>
-              Copper mug try-hard pitchfork pour-over freegan heirloom neutra air plant cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote
-              bag selvage hot chicken authentic tumeric truffaut hexagon try-hard chambray.
-            </Paragraph>
-            <ButtonGroup>
-              <Link href="/portfolio">
-                <Button className="primary">프로젝트 보러가기</Button>
-              </Link>
-              <Button className="secondary">Button</Button>
-            </ButtonGroup>
-          </Content>
-          <Animation />
-        </Container>
-      </section>
-    </>
-  );
-};
+const Home: NextPage = () => (
+  <>
+    <Head>
+      <title>나의 포트폴리오</title>
+      <meta name="description" content="임희연의 포트폴리오" />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+    <main>
+      <Container>
+        <Content>
+          <Title>
+            {/* 안녕하세요! */}
+            <br />
+            Front-End 개발자 임희연입니다
+          </Title>
+          <ButtonGroup>
+            {/* <Link href="/aboutMe">
+                <Button className="primary">About me</Button>
+              </Link> */}
+            <Link href="/projects">
+              <Button className="primary">프로젝트 보러가기</Button>
+            </Link>
+          </ButtonGroup>
+        </Content>
+        <Animation />
+      </Container>
+    </main>
+  </>
+);
 export default Home;
 
 const Container = styled.div`
@@ -55,7 +52,6 @@ const Container = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: flex-start; */
   align-items: center;
   text-align: center;
   @media (min-width: 768px) {
@@ -66,12 +62,13 @@ const Content = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 2rem;
-  font-weight: 400;
+  font-size: 1.5rem;
+  font-weight: 600;
   line-height: 1.2;
   margin-bottom: 2rem;
+
   @media (min-width: 768px) {
-    font-size: 4rem;
+    font-size: 2.7rem;
     margin-bottom: 3rem;
   }
 `;
@@ -100,14 +97,12 @@ const Button = styled.button`
   padding: 1rem 2rem;
   margin-right: 1rem;
   cursor: pointer;
-  &:last-of-type {
-    margin-right: 0;
-  }
+
   &.primary {
-    background-color: #4f46e5;
-    color: #fff;
+    background-color: #dce9f2;
+    margin-right: 10px;
     &:hover {
-      background-color: #413bb4;
+      background-color: #d3e0e9;
     }
   }
   &.secondary {

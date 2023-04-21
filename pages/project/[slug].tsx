@@ -1,9 +1,13 @@
+import React from 'react';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import Head from 'next/head';
 import { getSingleProjectPost } from '@/services/notionService';
 import { GetServerSideProps } from 'next';
 import { Page } from '@/types/project';
 import styled from '@emotion/styled';
+import remarkGfm from 'remark-gfm';
+// import { Prism as SyntaxHighlighter, nord } from 'react-syntax-highlighter';
+import rehypeRaw from 'rehype-raw';
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const slug = query.slug as string;
@@ -19,6 +23,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 };
 
 const ProjectPage = ({ markdown, post }: Page) => {
+  console.log('MArKDOWN: ', markdown);
   return (
     <>
       <Head>
@@ -29,7 +34,71 @@ const ProjectPage = ({ markdown, post }: Page) => {
       </Head>
       <Main>
         <Article>
-          <ReactMarkdown>{markdown}</ReactMarkdown>
+          {/* <ReactMarkdown remarkPlugins={[remarkGfm]} children={markdown} /> */}
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw]}
+            components={{
+              // code({ node, inline, className, children, ...props }) {
+              //   const match = /language-(\w+)/.exec(className || '');
+              //   return inline ? (
+              //     // 강조 (``)
+              //     <code
+              //       style={{
+              //         background: 'linear-gradient( to right, var(--sub-highlight-color) 15%, var(--highlight-color) 85%, var(--sub-highlight-color) )',
+              //         padding: '2px',
+              //         borderRadius: '3px',
+              //       }}
+              //       {...props}
+              //     >
+              //       {children}
+              //     </code>
+              //   ) : match ? (
+              //     // 코드 (```)
+              //     <SyntaxHighlighter style={nord} language={match[1]} PreTag="div" {...props}>
+              //       {String(children)
+              //         .replace(/\n$/, '')
+              //         .replace(/\n&nbsp;\n/g, '')
+              //         .replace(/\n&nbsp\n/g, '')}
+              //     </SyntaxHighlighter>
+              //   ) : (
+              //     <SyntaxHighlighter style={nord} language="textile" PreTag="div" {...props}>
+              //       {String(children).replace(/\n$/, '')}
+              //     </SyntaxHighlighter>
+              //   );
+              // },
+              // 인용문 (>)
+              // blockquote({ node, children, ...props }) {
+              //   return (
+              //     <div
+              //       style={{
+              //         background: '#f0f0f0',
+              //         padding: '1px 15px',
+              //         borderRadius: '10px',
+              //       }}
+              //       {...props}
+              //     >
+              //       {children}
+              //     </div>
+              //   );
+              // },
+              // img({ node, ...props }) {
+              //   return <img style={{ maxWidth: '60vw' }} src={props.src.replace('../../../../public/', '/')} alt="MarkdownRenderer__Image" />;
+              // },
+              em({ node, children, ...props }) {
+                return (
+                  <span style={{ fontStyle: 'italic' }} {...props}>
+                    {children}
+                  </span>
+                );
+              },
+            }}
+          >
+            {markdown
+              .replace(/\n\s\n\s/gi, '\n\n&nbsp;\n\n') //공백줄 표현
+              .replace(/\*\*/gi, '@$_%!^')
+              .replace(/@\$_%!\^/gi, '**')}
+          </ReactMarkdown>
         </Article>
       </Main>
     </>
@@ -44,18 +113,11 @@ const Main = styled.main`
 `;
 
 const Article = styled.article`
-  max-width: 700px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 1rem;
   font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
   line-height: 1.5;
   color: #1c1e21;
-
-  > h2,
-  h3 {
-    margin-top: 20px;
-  }
 
   /* Style for code blocks */
   pre {
@@ -78,36 +140,59 @@ const Article = styled.article`
     font-size: 14px;
   }
 
-  // from here
-
   /* Headings */
   > h1 {
     font-size: 32px;
-    font-weight: bold;
-    margin-top: 2rem;
-    margin-bottom: 1.5rem;
-    color: #1c1e21;
   }
 
   > h2 {
     font-size: 24px;
-    font-weight: bold;
-    margin-top: 2rem;
-    margin-bottom: 1.5rem;
-    color: #1c1e21;
   }
 
   > h3 {
     font-size: 20px;
-    font-weight: bold;
-    margin-top: 2rem;
-    margin-bottom: 1.5rem;
-    color: #1c1e21;
   }
 
   /* Paragraphs */
   > p {
-    margin-bottom: 1.5rem;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  > h1,
+  h2,
+  h3 {
+    font-weight: 700;
+    margin-top: 2rem;
+    margin: 1.5rem;
+  }
+
+  > h1,
+  h2,
+  h3,
+  p {
+    > img {
+      width: 100%;
+    }
+
+    > u {
+      text-decoration: underline;
+    }
+
+    > a {
+      color: #1a73e8;
+      text-decoration: none;
+      border-bottom: 2px solid #1a73e8;
+      padding-bottom: 2px;
+      &:hover {
+        color: #0c5dab;
+        border-bottom-color: #0c5dab;
+      }
+    }
+
+    > strong {
+      font-weight: 700;
+    }
   }
 
   /* Links */
@@ -131,6 +216,23 @@ const Article = styled.article`
   > ul,
   li {
     margin-bottom: 0.5rem;
+    > strong {
+      font-weight: 700;
+    }
+
+    > a {
+      > strong {
+        font-weight: 700;
+      }
+      color: #1a73e8;
+      text-decoration: none;
+      border-bottom: 2px solid #1a73e8;
+      padding-bottom: 2px;
+      &:hover {
+        color: #0c5dab;
+        border-bottom-color: #0c5dab;
+      }
+    }
   }
 
   > ol {
@@ -141,6 +243,22 @@ const Article = styled.article`
   > ol,
   li {
     margin-bottom: 0.5rem;
+    > strong {
+      font-weight: 700;
+    }
+    > a {
+      > strong {
+        font-weight: 700;
+      }
+      color: #1a73e8;
+      text-decoration: none;
+      border-bottom: 2px solid #1a73e8;
+      padding-bottom: 2px;
+      &:hover {
+        color: #0c5dab;
+        border-bottom-color: #0c5dab;
+      }
+    }
   }
 
   /* Code blocks */
@@ -182,24 +300,31 @@ const Article = styled.article`
     font-style: normal;
   }
 
-  > callout {
-    background-color: #fff5cc;
-    border: 1px solid #e6db55;
-    border-radius: 3px;
-    padding: 1rem;
-    margin: 1.5rem 0;
-    display: flex;
-    align-items: center;
-    > svg {
-      margin-right: 0.5rem;
-      color: #f1c40f;
-    }
+  /* Table */
 
-    > p {
-      margin: 0;
-      font-size: 16px;
-      line-height: 1.5;
-      color: #1c1e21;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: 700;
+    > strong {
+      font-weight: 700;
     }
   }
+
+  /* tr:nth-child(even) {
+    background-color: #f8f8f8;
+  } */
 `;
