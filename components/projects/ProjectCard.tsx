@@ -13,7 +13,7 @@ type ProjectCardProps = {
 const ProjectCard: FC<ProjectCardProps> = ({ project }) => (
   <Link href={`/project/${project.slug}`}>
     <Container onClick={(e) => e.stopPropagation()}>
-      <Image src={project.cover} alt="cover-image" width={340} height={190} />
+      <Image src={project.cover} alt="cover-image" width={339} height={190} />
       <Content>
         <p className="project title">{project.title}</p>
         <p className="project description">{project.description}</p>
@@ -30,7 +30,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => (
           URL 바로가기
         </a>
         <a href={project.github} target="_blank" className="project github" rel="noreferrer">
-          Github 바로가기
+          URL 바로가기
         </a>
       </LinkContainer>
     </Container>
